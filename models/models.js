@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Define models
 const productSchema = new Schema({
   quantity: {
     type: float,
@@ -61,3 +62,14 @@ const itemSchema = new Schema({
     required: [true, "*Campo obrigatório!"],
   },
 });
+
+// Export models
+const Product = mongoose.model("Product", productSchema);
+const Recipe = mongoose.model("Recipe", recipeSchema);
+const Item = mongoose.model("Item", itemSchema);
+
+module.exports = {
+  Product,
+  Recipe,
+  Item,
+};
