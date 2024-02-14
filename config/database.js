@@ -4,4 +4,3 @@ const dbAcess = process.env.MONGO_USER + encodeURIComponent(process.env.MONGO_PA
 module.exports = {
     mongoURI: dbAcess
 }
-
