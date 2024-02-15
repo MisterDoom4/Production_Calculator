@@ -7,17 +7,17 @@
         "profit": 0,
         "items": [
             {
-                "id": "65ce737eaa224350a572a8fc",
+                "_id": "65ce737eaa224350a572a8fc",
                 "quantity": 500,
                 "unity": "grams"
             },
             {
-                "id": "65ce737eaa224350a572a8fd",
+                "_id": "65ce737eaa224350a572a8fd",
                 "quantity": 2,
                 "unity": "grams"
             },
             {
-                "id": "65ce737eaa224350a572a900",
+                "_id": "65ce737eaa224350a572a900",
                 "quantity": 5000,
                 "unity": "ml"
             }

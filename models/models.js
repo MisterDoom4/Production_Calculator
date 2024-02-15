@@ -24,11 +24,7 @@ const recipeSchema = new Schema({
   },
   items: [
     {
-      id: {
-        type: String,
-        required: [true, "*Campo obrigatório!"],
-      },
-      quantity: {
+        quantity: {
         type: Number,
         required: [true, "*Campo obrigatório!"],
       },

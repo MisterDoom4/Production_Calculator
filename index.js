@@ -61,7 +61,26 @@ async function getItem(id) {
 async function getRecipe(id) {
   let query = id ? { _id: id } : { };
   let items = await Recipe.find(query).select('name quantity unity cost items');
-  console.log(items);
+  //console.log(items);
   return items;
 }
 
+async function getRecipe(id) {
+  let query = id ? { _id: id } : { };
+  let items = await Recipe.find(query).select('name quantity unity cost items');
+  console.log(items[0].items);
+  console.log(getItem(items[0].items[0].id));
+  //getItem(items[0].items[0].id)
+  return items;
+}
+
+
+/*
+const recipe = require('./sample-data/baseRecipes.json')[0];
+
+const newRecipe = new Recipe(recipe);
+newRecipe.save().then((res) => {
+  console.log(res);
+}).catch((error) => {
+  console.error(error);
+});*/
