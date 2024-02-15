@@ -12,6 +12,12 @@
         "cost": 27.0
     },
     {
+        "name": "Macarrão tradicional cru",
+        "quantity": 50,
+        "unity": "grams",
+        "cost": 0.5 
+    },
+    {
         "name": "Sal refinado",
         "quantity": 1000,
         "unity": "grams",
@@ -28,5 +34,11 @@
         "quantity": 1000,
         "unity": "kilograms",
         "cost": 32.0
+    },
+    {
+        "name": "Água",
+        "quantity": 1000,
+        "unity": "ml",
+        "cost": 0.5
     }
 ]
