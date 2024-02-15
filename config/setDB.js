@@ -5,12 +5,27 @@ require('dotenv').config();
 //Import model
 const { Item }  = require('./../models/models');
 
-//delete all the Items records
+//load the data from loadInitialData.js
+const data = require('./loadInitialData').itemsData;
+
+//delete all the Item Collection records and save the mockup data
 async function cleanAllItemsRecords() {
-    Item.deleteMany({}).then((res) => { 
+    Item.deleteMany({}).then((res) => {
         console.log(res);
+        
+        return Item.insertMany(data)
+        .then((docs) => {
+            console.log('Documentos inseridos com sucesso:', docs.length);
+          })
+          .catch((error) => {
+            console.error('Erro ao inserir documentos:', error);
+          });
+        
+    }).then(() => {
         mongoose.connection.close();
-    }).catch(console.error);
+
+    })
+    .catch(console.error);
 }
 
 const databaseUrl = require('./../config/database').mongoURI;

@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Extrato de Tomate",
+        "quantity": 300.50,
+        "unity": "ml",
+        "cost": 7.0
+    },
+    {
+        "name": "Arroz tradicional cru",
+        "quantity": 5000,
+        "unity": "grams",
+        "cost": 27.0
+    },
+    {
+        "name": "Sal refinado",
+        "quantity": 1000,
+        "unity": "grams",
+        "cost": 5.0
+    },
+    {
+        "name": "Óleo de Soja",
+        "quantity": 1000,
+        "unity": "ml",
+        "cost": 6.0
+    },
+    {
+        "name": "Alho",
+        "quantity": 1000,
+        "unity": "kilograms",
+        "cost": 32.0
+    }
+]
