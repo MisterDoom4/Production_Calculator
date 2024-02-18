@@ -22,6 +22,38 @@ exports.showProducts = function (req, res, next) {
     });
 };
 
+exports.addProduct = function (req, res, next) {
+    const product = new Product(req.body);
+    product
+        .save()
+        .then((resp) => {
+        res.send(resp);
+        })
+        .catch((next) => {
+        res.send(next);
+        });
+    };
+
+exports.deleteProduct = function (req, res, next) {
+    Product.findByIdAndDelete(req.params.id)
+        .then((resp) => {
+        res.send(resp);
+        })
+        .catch((next) => {
+        res.send(next);
+        });
+    };
+
+exports.updateProduct = function (req, res, next) {
+    Product.findByIdAndUpdate(req.params.id, req.body)
+        .then((resp) => {
+        res.send(resp);
+        })
+        .catch((next) => {
+        res.send(next);
+        });
+    };
+
 exports.getRecipe = function (req, res, next) {
   let query = req.params.id ? { _id: req.params.id } : {};
   Recipe.find(query)

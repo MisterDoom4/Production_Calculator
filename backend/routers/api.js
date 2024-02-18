@@ -6,6 +6,12 @@ const apiController = require("../controllers/apiController");
 router.get("/product/:id", apiController.getProduct);
 // busca de todos os produtos
 router.get("/showproducts",apiController.showProducts);
+// adição de produto
+router.post("/addproduct", apiController.addProduct);
+// deletar produto
+router.delete("/deleteproduct/:id", apiController.deleteProduct);
+// atualizar produto
+router.put("/updateproduct/:id", apiController.updateProduct);
 
 // busca de receita pelo id
 router.get("/recipe/:id", apiController.getRecipe);
