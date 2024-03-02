@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
@@ -32,6 +33,11 @@ app.use(function (req, res, next) {
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Use cors middleware and allow all methods
+app.use(cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
 
 const api = require("./routers/api");
 app.use("/api", api);
