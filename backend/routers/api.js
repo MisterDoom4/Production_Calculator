@@ -8,6 +8,8 @@ router.get("/recipe/:id", apiController.getRecipe);
 router.get("/showrecipes",apiController.showRecipes);
 // busca de item pelo id
 router.get("/item/:id", apiController.getItem);
+// busca de receita pelo name
+router.get("/item/search/:name", apiController.getItemByName);
 // busca de todos os itens
 router.get("/showitems",apiController.showItems);
 // busca de produto pelo id

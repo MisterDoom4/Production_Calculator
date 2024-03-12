@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ItemsTable from './ItemsTable';
 import Message from './Message';
 import CreateItem from './CreateItem';
+import Search from './Search';
 
 function ItemsPage() {
     const [items, setItems] = useState(null);
@@ -16,19 +17,20 @@ function ItemsPage() {
 
 
     useEffect(() => {
+        console.log(items);
         fetch(`http://localhost:3000/api/${SearchItem == '' ?"showItems" : SearchItem}`)
             .then(response => response.json())
             .then(data => {
                 setItems(data);
-            //    console.log(data);
+            
             });
     }, []);
 
     return (
         <>
             <div className='flex flex-rol m-5 gap-2'>
-                <button className='text-blue-800' onClick={() => changeModal()}>Create</button>
-                <button className='text-blue-800'>Search</button>
+                <button className='text-blue-800 m-1' onClick={() => changeModal()}>Create</button>
+                <Search setItems={setItems} />
             </div>
             {items ? <ItemsTable props={items} /> : 'Loading...'}
             {isOpen ? <CreateItem isOpen={isOpen} setModal={changeModal} setState={ setResult } /> : ''}

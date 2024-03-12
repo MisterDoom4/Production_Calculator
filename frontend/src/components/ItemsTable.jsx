@@ -1,7 +1,17 @@
 import React from "react";
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+import EditItem from "./EditItem";
 function ItemsTable({ props }) {
+  const [edit, setEdit] = useState(false);
+  const [item, setItem] = useState(null);
+
+
+  function changeModal() { 
+    setEdit(!edit);
+  }
 
   const handleDelete = async (id) => {
   
@@ -22,6 +32,13 @@ function ItemsTable({ props }) {
 
   
   };
+
+  const handleEdit = async (item) => {
+    setEdit(true);
+    setItem(item)
+    console.log('Editando item:', item.name);
+
+};
 
 
   return (
@@ -45,10 +62,10 @@ function ItemsTable({ props }) {
                 </td>
                 <td className="border px-4 py-2">R$ {item.cost}</td>
                 <td className="border px-4 py-2">
-                  <div className="flex flex-row">
+                  <div className="flex flex-row gap-1">
 
-                  <button >Editar</button>
-                  <button onClick={() => handleDelete(item._id)}>Apagar</button>
+                  <button  className="bg-blue-500 text-white px-2 py-1" onClick={() => handleEdit(item)}><FontAwesomeIcon icon={faPencil} className="  px-2"/></button>
+                  <button  className="bg-red-500 text-white px-2 py-1" onClick={() => handleDelete(item._id)}><FontAwesomeIcon icon={faTrash} className="  px-2"/></button>
                   </div>
                 </td>
               </tr>
@@ -56,6 +73,7 @@ function ItemsTable({ props }) {
           </tbody>
         </table>
       </div>
+      {edit ? <EditItem item={item} setModal={changeModal}/> : ''}
     </div>
   );
 }

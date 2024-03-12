@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import unityData from "./../assets/unityData.json";
 import Message from "./Message.jsx";
 
-function CreateItem(props) {
-  const [cost, setCost] = useState(0);
-  const [quantity, setQuantity] = useState(0);
-  const [name, setName] = useState(null);
+function EditItem(props) {
+  const [cost, setCost] = useState(props.item.cost);
+  const [quantity, setQuantity] = useState(props.item.quantity);
+  const [name, setName] = useState(props.item.name);
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(props.item.unity);
   const [filteredUnits, setFilteredUnits] = useState([]);
 
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -17,7 +17,6 @@ function CreateItem(props) {
   const [unity, setUnity] = useState("");
 
   const units = unityData;
-
 
   const handleInputChange = (event) => {
     setUnity("");
@@ -42,29 +41,28 @@ function CreateItem(props) {
   const handleValueChange = (event) => {
     const value = event.target.value;
     console.log(value);
-      if (event.target.id === "cost") {
-        if (value < 0 && event.target.id === "cost") {
-          setCost(0);
-        } else {
-          setCost(value);
-        }
+    if (event.target.id === "cost") {
+      if (value < 0 && event.target.id === "cost") {
+        setCost(0);
+      } else {
+        setCost(value);
       }
-      if (event.target.id === "quantity") {
-        if (value < 0 && event.target.id === "quantity") {
-          setQuantity(0);
-        } else {
-          setQuantity(value);
-        }
+    }
+    if (event.target.id === "quantity") {
+      if (value < 0 && event.target.id === "quantity") {
+        setQuantity(0);
+      } else {
+        setQuantity(value);
       }
-  
+    }
   };
 
   function saveItem(event) {
     event.preventDefault();
     console.log(name, quantity, cost, unity);
     if (name && quantity && cost && unity) {
-      fetch("http://localhost:3000/api/additem", {
-        method: "POST",
+      fetch(`http://localhost:3000/api/updateitem/${props.item._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -78,7 +76,6 @@ function CreateItem(props) {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          props.setState(true);
           props.setModal();
         })
         .catch((error) => {
@@ -89,7 +86,6 @@ function CreateItem(props) {
       setIsEmpty(true);
       setShowErrorMessage(true);
     }
-   
   }
 
   return (
@@ -107,7 +103,7 @@ function CreateItem(props) {
                   }`}
                   type="text"
                   id="name"
-                  placeholder="insert name"
+                  value={name}
                   onChange={handleNameChange}
                 />
               </div>
@@ -161,7 +157,6 @@ function CreateItem(props) {
                   className={`mx-5 block w-full bg-slate-300 rounded-md shadow-sm p-2 m-1 ${
                     isEmpty && !cost ? "border border-red-500" : ""
                   }`}
-                 
                   type="number"
                   min="0"
                   id="cost"
@@ -170,11 +165,25 @@ function CreateItem(props) {
                 />
               </div>
               <div className="flex gap-1 mt-2">
-
-              <button className="bg-green-500 text-white" onClick={saveItem}>Create</button>
-              <button className="bg-red-500 text-white" onClick={() => props.setModal()}>Close</button>
+                <button className="bg-green-500 text-white" onClick={saveItem}>
+                  Save
+                </button>
+                <button
+                  className="bg-red-500 text-white"
+                  onClick={() => props.setModal()}
+                >
+                  Cancel
+                </button>
               </div>
-              {showErrorMessage ? <Message style={'bg-red-500'} message={`Insert all the data!`} setState={ setShowErrorMessage} /> : ""}
+              {showErrorMessage ? (
+                <Message
+                  style={"bg-red-500"}
+                  message={`Insert all the data!`}
+                  setState={setShowErrorMessage}
+                />
+              ) : (
+                ""
+              )}
             </form>
           </div>
         </div>
@@ -183,4 +192,4 @@ function CreateItem(props) {
   );
 }
 
-export default CreateItem;
+export default EditItem;
