@@ -77,7 +77,7 @@ function CreateItem(props) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success Creating:", data.name);
           props.setState(true);
           props.setModal();
         })

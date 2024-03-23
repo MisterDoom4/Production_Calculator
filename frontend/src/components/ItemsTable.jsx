@@ -1,4 +1,5 @@
 import React from "react";
+import DeletePopup from "./DeletePopup";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -7,30 +8,15 @@ import EditItem from "./EditItem";
 function ItemsTable({ props }) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(null);
-
+  const [deleteItem, setDeleteItem] = useState(false);
 
   function changeModal() { 
     setEdit(!edit);
   }
 
-  const handleDelete = async (id) => {
-  
-      fetch(`http://localhost:3000/api/deleteitem/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          console.error('Erro ao excluir o item:', error);
-        });
-
-  
+  const handleDelete = async (item) => {
+    setDeleteItem(true);
+    setItem(item)
   };
 
   const handleEdit = async (item) => {
@@ -65,7 +51,7 @@ function ItemsTable({ props }) {
                   <div className="flex flex-row gap-1">
 
                   <button  className="bg-blue-500 text-white px-2 py-1" onClick={() => handleEdit(item)}><FontAwesomeIcon icon={faPencil} className="  px-2"/></button>
-                  <button  className="bg-red-500 text-white px-2 py-1" onClick={() => handleDelete(item._id)}><FontAwesomeIcon icon={faTrash} className="  px-2"/></button>
+                  <button  className="bg-red-500 text-white px-2 py-1" onClick={() => handleDelete(item)}><FontAwesomeIcon icon={faTrash} className="  px-2"/></button>
                   </div>
                 </td>
               </tr>
@@ -73,7 +59,8 @@ function ItemsTable({ props }) {
           </tbody>
         </table>
       </div>
-      {edit ? <EditItem item={item} setModal={changeModal}/> : ''}
+      {edit ? <EditItem item={item} setModal={changeModal} /> : ''}
+      {deleteItem ? < DeletePopup setDeleteItem={setDeleteItem} item={item} /> : ''}
     </div>
   );
 }

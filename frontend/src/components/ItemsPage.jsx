@@ -17,14 +17,13 @@ function ItemsPage() {
 
 
     useEffect(() => {
-        console.log(items);
+        
         fetch(`http://localhost:3000/api/${SearchItem == '' ?"showItems" : SearchItem}`)
             .then(response => response.json())
             .then(data => {
                 setItems(data);
-            
             });
-    }, []);
+    }, [items]);
 
     return (
         <>

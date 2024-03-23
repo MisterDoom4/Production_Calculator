@@ -14,7 +14,7 @@ function EditItem(props) {
 
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const [unity, setUnity] = useState("");
+  const [unity, setUnity] = useState(props.item.unity);
 
   const units = unityData;
 
@@ -75,7 +75,7 @@ function EditItem(props) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success Editing:", data.name);
           props.setModal();
         })
         .catch((error) => {
