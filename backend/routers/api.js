@@ -15,6 +15,8 @@ router.put("/updateproduct/:id", apiController.updateProduct);
 
 // busca de receita pelo id
 router.get("/recipe/:id", apiController.getRecipe);
+// busca de receita pelo name
+router.get("/recipe/search/:name", apiController.getNameRecipe);
 // busca de todas as receitas
 router.get("/showrecipes",apiController.showRecipes);
 // adição de receita
@@ -26,7 +28,7 @@ router.put("/updaterecipe/:id", apiController.updateRecipe);
 
 // busca de item pelo id
 router.get("/item/:id", apiController.getItem);
-// busca de receita pelo name
+// busca de item pelo name
 router.get("/item/search/:name", apiController.getItemByName);
 // busca de todos os itens
 router.get("/showitems",apiController.showItems);

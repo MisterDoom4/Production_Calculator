@@ -23,36 +23,36 @@ exports.showProducts = function (req, res, next) {
 };
 
 exports.addProduct = function (req, res, next) {
-    const product = new Product(req.body);
-    product
-        .save()
-        .then((resp) => {
-        res.send(resp);
-        })
-        .catch((next) => {
-        res.send(next);
-        });
-    };
+  const product = new Product(req.body);
+  product
+    .save()
+    .then((resp) => {
+      res.send(resp);
+    })
+    .catch((next) => {
+      res.send(next);
+    });
+};
 
 exports.deleteProduct = function (req, res, next) {
-    Product.findByIdAndDelete(req.params.id)
-        .then((resp) => {
-        res.send(resp);
-        })
-        .catch((next) => {
-        res.send(next);
-        });
-    };
+  Product.findByIdAndDelete(req.params.id)
+    .then((resp) => {
+      res.send(resp);
+    })
+    .catch((next) => {
+      res.send(next);
+    });
+};
 
 exports.updateProduct = function (req, res, next) {
-    Product.findByIdAndUpdate(req.params.id, req.body)
-        .then((resp) => {
-        res.send(resp);
-        })
-        .catch((next) => {
-        res.send(next);
-        });
-    };
+  Product.findByIdAndUpdate(req.params.id, req.body)
+    .then((resp) => {
+      res.send(resp);
+    })
+    .catch((next) => {
+      res.send(next);
+    });
+};
 
 exports.getRecipe = function (req, res, next) {
   let query = req.params.id ? { _id: req.params.id } : {};
@@ -65,6 +65,7 @@ exports.getRecipe = function (req, res, next) {
       res.send("id not found");
     });
 };
+
 exports.getNameRecipe = function (req, res, next) {
   let query = req.params.name
     ? { name: { $regex: new RegExp(req.params.name, "i") } }
@@ -100,39 +101,25 @@ exports.addRecipe = function (req, res, next) {
     });
 };
 
-exports.getItemByName = function (req, res, next) {
-  let query = req.params.name
-    ? { name: { $regex: new RegExp(req.params.name, "i") } }
-    : {};
-  Item.find(query)
-    .select("name quantity unity cost")
+exports.deleteRecipe = function (req, res, next) {
+  Recipe.findByIdAndDelete(req.params.id)
     .then((resp) => {
       res.send(resp);
     })
     .catch((next) => {
-      res.send(`name ${req.params.name} not found`);
+      res.send(next);
     });
 };
-     
-exports.deleteRecipe = function (req, res, next) {
-    Recipe.findByIdAndDelete(req.params.id)
-        .then((resp) => {
-        res.send(resp);
-        })
-        .catch((next) => {
-        res.send(next);
-        });
-    };
 
 exports.updateRecipe = function (req, res, next) {
-    Recipe.findByIdAndUpdate(req.params.id, req.body)
-        .then((resp) => {
-        res.send(resp);
-        })
-        .catch((next) => {
-        res.send(next);
-        });
-    };
+  Recipe.findByIdAndUpdate(req.params.id, req.body)
+    .then((resp) => {
+      res.send(resp);
+    })
+    .catch((next) => {
+      res.send(next);
+    });
+};
 
 exports.getItem = function (req, res, next) {
   let query = req.params.id ? { _id: req.params.id } : {};
@@ -146,30 +133,21 @@ exports.getItem = function (req, res, next) {
     });
 };
 
-exports.showItems = function (req, res, next) {
-  Item.find()
-    .then((resp) => {
-      res.send(resp);
-    })
-    .catch((next) => {
-      res.send(next);
-    });
-};
-
-exports.getProduct = function (req, res, next) {
-  let query = req.params.id ? { _id: req.params.id } : {};
-  Product.find(query)
+exports.getItemByName = function (req, res, next) {
+  let query = req.params.name
+    ? { name: { $regex: new RegExp(req.params.name, "i") } }
+    : {};
+  Item.find(query)
     .select("name quantity unity cost")
     .then((resp) => {
       res.send(resp);
     })
     .catch((next) => {
-      res.send("id not found");
+      res.send(`name ${req.params.name} not found`);
     });
 };
-
-exports.showProducts = function (req, res, next) {
-  Product.find()
+exports.showItems = function (req, res, next) {
+  Item.find()
     .then((resp) => {
       res.send(resp);
     })
