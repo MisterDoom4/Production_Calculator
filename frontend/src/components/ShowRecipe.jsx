@@ -1,0 +1,67 @@
+import React, { useEffect } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+
+function ShowRecipe({ recipe, setIsOpen }) {
+  const [items, setItems] = useState([]);
+
+  function closeWindow() {
+    setIsOpen(false);
+  }
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const fetchedItems = await Promise.all(
+        recipe.items.map((item) =>
+          fetch(`http://localhost:3000/api/item/${item._id}`)
+            .then((response) => response.json())
+            .then((data) => data[0].name)
+        )
+      );
+      setItems(fetchedItems);
+    };
+
+    fetchItems();
+  }, [recipe.items]);
+
+  return (
+    <>
+      <div className="flex justify-center ">
+        <button className="bg-blue-500 text-white m-2" onClick={closeWindow}>
+          Voltar
+        </button>
+        <button className="bg-blue-500 text-white m-2">
+          <FontAwesomeIcon icon={faPencil} className="  px-2" />
+        </button>
+        <button className="bg-red-500 text-white m-2">
+          <FontAwesomeIcon icon={faTrash} className="  px-2" />
+        </button>
+      </div>
+      <div className="border-t-black border-t-2 border-opacity-50">
+        <h2 className="m-2 text-2xl font-bold flex justify-center">
+          {recipe.name} - {recipe.quantity} {recipe.unity}
+        </h2>
+        <p className="text-sm mb-1">Ingredients</p>
+        <div>
+          {recipe.items.map((item, index) => (
+            <p key={index}>
+              {items[index] + " - " + item.quantity + " " + item.unity}
+            </p>
+          ))}
+        </div>
+        <p className="mt-2">Cost: R$ {recipe.cost}</p>
+      </div>
+      
+      {/* {edit ? <EditItem item={item} setModal={changeModal} /> : ""}
+      {deleteItem ? (
+        <DeletePopup setDeleteItem={setDeleteItem} item={item} />
+      ) : (
+        ""
+      )} */}
+    </>
+  );
+}
+
+export default ShowRecipe;
