@@ -11,7 +11,19 @@ exports.getRecipe = function (req, res, next) {
       res.send("id not found");
     });
 };
-
+exports.getNameRecipe = function (req, res, next) {
+  let query = req.params.name
+    ? { name: { $regex: new RegExp(req.params.name, "i") } }
+    : {};
+  Recipe.find(query)
+    .select("name quantity unity cost items")
+    .then((resp) => {
+      res.send(resp);
+    })
+    .catch((next) => {
+      res.send("name not found");
+    });
+};
 exports.showRecipes = function (req, res, next) {
   Recipe.find()
     .then((resp) => {

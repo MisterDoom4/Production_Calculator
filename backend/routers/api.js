@@ -24,5 +24,18 @@ router.delete("/deleteitem/:id", apiController.deleteItem);
 // atualizar item
 router.put("/updateitem/:id", apiController.updateItem);
 
+// adição de produto
+router.post("/addproduct", apiController.addProduct);
+// deletar produto
+router.delete("/deleteproduct/:id", apiController.deleteProduct);
+// atualizar produto
+router.put("/updateproduct/:id", apiController.updateProduct);
+
+// adição de receita
+router.post("/addrecipe", apiController.addRecipe);
+// deletar receita
+router.delete("/deleterecipe/:id", apiController.deleteRecipe);
+// atualizar receita
+router.put("/updaterecipe/:id", apiController.updateRecipe);
 
 module.exports = router;
