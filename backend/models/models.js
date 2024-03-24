@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // Define models
 const productSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, "*Campo obrigatório!"],
+  },
   quantity: {
     type: Number,
     required: [true, "*Campo obrigatório!"],
@@ -11,9 +15,25 @@ const productSchema = new Schema({
     type: String,
     required: [true, "*Campo obrigatório!"],
   },
+  recipe : {
+    type: Schema.Types.ObjectId,
+    ref: "Recipes",
+  },
+  cost: {
+    type: Number,
+    required: [true, "*Campo obrigatório!"],
+  },
+  profit : {
+    type: Number,
+    required: [true, "*Campo obrigatório!"],
+  },
 });
 
 const recipeSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, "*Campo obrigatório!"],
+  },
   quantity: {
     type: Number,
     required: [true, "*Campo obrigatório!"],
@@ -35,10 +55,6 @@ const recipeSchema = new Schema({
     },
   ],
   cost: {
-    type: Number,
-    required: [true, "*Campo obrigatório!"],
-  },
-  profit: {
     type: Number,
     required: [true, "*Campo obrigatório!"],
   },
