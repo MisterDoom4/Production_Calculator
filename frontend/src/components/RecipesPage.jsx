@@ -6,7 +6,7 @@ import RecipesTable from './RecipesTable';
 function RecipesPage() {
   const [recipes, setRecipes] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [SearchItem, setSearchItem] = useState('');
+    const [SearchedItem, setSearchedItem] = useState('');
     const [Result, setResult] = useState(false);
     const [reload, setReload] = useState(false);    
 
@@ -14,25 +14,26 @@ function RecipesPage() {
         setIsOpen(!isOpen);
     }
 
-
-
-    useEffect(() => {
-        
-        fetch(`http://localhost:3000/api/${SearchItem == '' ?"/showrecipes" : SearchItem}`)
+    function getRecipeList() {
+        fetch(`http://localhost:3000/api/showrecipes`) 
             .then(response => response.json())
             .then(data => {
                 setRecipes(data);
-                console.log(data);
             });
+    }
+
+    useEffect(() => {
+        
+        SearchedItem == '' ? getRecipeList() : ''
     }, [reload]);
 
     return (
         <>
             <div className='flex flex-rol m-5 gap-2'>
                 <button className='text-blue-800 m-1' onClick={() => changeModal()}>Create</button>
-                <Search setRecipes={setRecipes} />
+                <Search setSearchedTerm={ setSearchedItem } setRecipes={setRecipes} label={ "recipe"} />
             </div>
-             {recipes ? <RecipesTable recipes={recipes} /> : 'Loading...'}
+             {recipes ? <RecipesTable recipes={!SearchedItem ? recipes : SearchedItem} /> : 'Loading...'}
             {/*{isOpen ? <CreateRecipe isOpen={isOpen} setModal={changeModal} setState={ setResult } /> : ''} */}
             {Result ? <Message style={'bg-green-500'} message={`Item sucefully created!`} setState={setResult} /> : ""}
         </>

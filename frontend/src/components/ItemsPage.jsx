@@ -7,31 +7,35 @@ import Search from './Search';
 function ItemsPage() {
     const [items, setItems] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [SearchItem, setSearchItem] = useState('');
+    const [SearchedItem, setSearchedItem] = useState('');
     const [Result, setResult] = useState(false);
 
     function changeModal() { 
         setIsOpen(!isOpen);
     }
 
-
-
-    useEffect(() => {
-        
-        fetch(`http://localhost:3000/api/${SearchItem == '' ?"showItems" : SearchItem}`)
+    function getItemList() {
+        fetch(`http://localhost:3000/api/showItems`) 
             .then(response => response.json())
             .then(data => {
                 setItems(data);
             });
+    }
+
+
+    useEffect(() => {
+        
+        SearchedItem == '' ? getItemList() : ''
+
     }, [items]);
 
     return (
         <>
             <div className='flex flex-rol m-5 gap-2'>
                 <button className='text-blue-800 m-1' onClick={() => changeModal()}>Create</button>
-                <Search setItems={setItems} />
+                <Search setSearchedTerm={setSearchedItem} setList={setItems} label={ "item"} />
             </div>
-            {items ? <ItemsTable props={items} /> : 'Loading...'}
+            {items ? <ItemsTable props={!SearchedItem ? items : SearchedItem} /> : 'Loading...'}
             {isOpen ? <CreateItem isOpen={isOpen} setModal={changeModal} setState={ setResult } /> : ''}
             {Result ? <Message style={'bg-green-500'} message={`Item sucefully created!`} setState={setResult} /> : ""}
         </>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-function Search(props) {
+function Search({setList, label, setSearchedTerm}) {
     const [searchTerm, setSearchTerm] = useState('');
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -11,17 +11,19 @@ function Search(props) {
       const handleSearchSubmit = (event) => {
         event.preventDefault();
         // Aqui você pode fazer a busca no banco de dados usando o searchTerm
-          console.log('Searching for:', searchTerm);
-          fetch(`http://localhost:3000/api/item/search/${searchTerm == '' ? "" : searchTerm}`)
+        console.log('Searching for:', searchTerm);
+        if (searchTerm != '') {
+          fetch(`http://localhost:3000/api/${label}/search/${searchTerm == '' ? "" : searchTerm}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                props.setItems(data);
+              console.log(data);
+              setSearchedTerm(data);
             
             })
-              .catch(error => {
-                console.error('Error:', error);
-              });
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        } else setSearchedTerm('');
       };
 
   return (
@@ -33,7 +35,7 @@ function Search(props) {
           type="text"
           value={searchTerm}
           onChange={handleSearchChange}
-          placeholder="Insert the item name"
+          placeholder={`Insert the ${label} name`}
         />
         <button className="bg-blue-500 text-white rounded-lg px-4 py-2" type="submit">
           Search
